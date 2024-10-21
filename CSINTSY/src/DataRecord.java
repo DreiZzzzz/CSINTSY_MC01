@@ -71,5 +71,13 @@ public class DataRecord {
             System.out.println();
         }
     }
+
+    public int getTotalNeighbours(int index) {
+        return connectionsMap.get(index).size();
+    }
+
+    public void printHeuristicValue() {
+
+    }
 }
 

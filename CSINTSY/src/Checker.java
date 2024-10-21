@@ -29,6 +29,7 @@ public class Checker {
             }
         } while(recordHolder == null);  // re-loop until the file is read correctly
 
+        System.out.println("Neighbours of B: " + recordHolder.getActualCost().get(16).size()); // 4
         // If file is read successfully, print connections
         recordHolder.printConnections();
     }
