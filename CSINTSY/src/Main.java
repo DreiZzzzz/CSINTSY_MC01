@@ -5,7 +5,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         String fileToRead;
         String startNode, goalNode;
-
+        String userChoice;
 
         // asks the user to enter the file name where the records are stored
         System.out.println("Enter file to read: ");
@@ -20,5 +20,19 @@ public class Main {
         // asks the user to enter the goal node
         System.out.println("Enter Goal");
         goalNode = sc.nextLine();
+
+        // asks the user on what algorithm to use
+        // loop while input is not valid
+        do {
+            System.out.println("!! USER OPTIONS !!");
+            System.out.println("(UCS) Uniform Cost Search Algorithm");
+            System.out.println("(A*) A* Search Algorithm");
+
+            System.out.println("Enter choice [UCS/A*]: ");
+            userChoice = sc.nextLine();
+        } while(!userChoice.equals("UCS") && !userChoice.equals("A*"));
+
+
+        System.out.println( );
     }
 }
