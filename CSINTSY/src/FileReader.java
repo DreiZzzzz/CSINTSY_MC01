@@ -4,11 +4,9 @@ import java.util.Scanner;
 
 public class FileReader {
     private String numNodes;
-    private String numNeighbours;
     private String nodeName, heuristicValue;
     private DataRecord recordHolder;
     private String numConnections;
-
     private String parentNode, costOfPath, neighbourNodeName;
 
     public DataRecord fileReader(String fileName) {
@@ -16,17 +14,17 @@ public class FileReader {
         try {
             Scanner scanner = new Scanner(new File(fileName));
             numNodes = scanner.nextLine(); // stores the number of nodes
+            numConnections = scanner.nextLine(); // stores the overall number of connections
 
             // Instantiates recordHolder with (n) number of nodes/elements (accounts)
-            recordHolder = new DataRecord(Integer.parseInt(numNodes));
+            recordHolder = new DataRecord(numNodes, numConnections); // assume string will be converted to int in the class
 
             // this loop scans for nodes and their heuristic value
             for (int i = 0; i < Integer.parseInt(numNodes); i++) {
                 nodeName = scanner.nextLine(); // stores the name of node
                 heuristicValue = scanner.nextLine(); // stores the heuristic value of nodes
-                recordHolder.addParentNode(nodeName, heuristicValue); // adds parentnode name and their heuristic value to the list
+                recordHolder.addParentNode(nodeName, heuristicValue); // adds parent node name and their heuristic value to the list
             }
-            numConnections = scanner.nextLine(); // stores the overall number of connections
             for (int i = 0; i < Integer.parseInt(numConnections); i++) {
                 parentNode = scanner.nextLine(); // stores the name of the parent nodes
                 costOfPath = scanner.nextLine(); // stores the cost of path from parent to neighbour
@@ -36,7 +34,7 @@ public class FileReader {
             scanner.close();
         } catch (FileNotFoundException e) {
             // Display a message when the input file name does not exist
-            System.out.println("\nFILE DOES NOT EXIST\n");
+            System.out.println("\nFILE DOES NOT EXIST: " + fileName + "\n");
             return null;
         }
 
@@ -44,8 +42,8 @@ public class FileReader {
     }
 }
 
-// EXAMPLE TEXT FILE
-22
+// text file
+22 60
 M 4.1
 K 4.1
 U 4.5
@@ -68,66 +66,68 @@ R 4.3
 B 4.2
 T 4.6
 A 3.9
-        60
-M <COST OF PATH> N
-M <COST OF PATH> K
-K <COST OF PATH> J1
-K <COST OF PATH> U
-K <PUT COP HERE> M
-U <PUT COP HERE> K
-U <PUT COP HERE> J2
-N <COST OF PATH> M
-N <COST OF PATH> O
-J1 <COST OF PATH> K
-J1 <edit cop> J2
-J1 <edit cop> I
-J2 <edit cop> U
-J2 <edit cop> J1
-J2 <edit cop> L
-I <edit cop> J1
-I <edit cop> L
-I <edit cop> G
-L <edit cop> J2
-L <edit cop> I
-L <edit cop> H
-G <edit cop> I
-G <edit cop> H
-G <edit cop> F
-H <edit cop> L
-H <edit cop> G
-H <edit cop> F
-F <edit cop> G
-F <edit cop> H
-F <edit cop> E
-O <edit cop> N
-O <edit cop> E
-O <edit cop> S
-O <edit cop> P
-E <edit cop> F
-E <edit cop> O
-E <edit cop> D
-S <edit cop> O
-S <edit cop> P
-S <edit cop> Q
-P <edit cop> S
-P <edit cop> O
-P <edit cop> D
-P <edit cop> Q
-D <edit cop> E
-D <edit cop> P
-D <edit cop> C
-Q <edit cop> S
-Q <edit cop> P
-Q <edit cop> R
-C <edit cop> D
-C <edit cop> B
-R <edit cop> Q
-R <edit cop> B
-R <edit cop> T
-B <edit cop> C
-B <edit cop> R
-B <edit cop> A
-T <edit cop> R
-A <edit cop> B
+M 1 N
+M 2 K
+K 3 J1
+K 4 U
+K 5 M
+U 6 K
+U 7 J2
+N 8 M
+N 9 O
+J1 10 K
+J1 11 J2
+J1 12 I
+J2 13 U
+J2 14 J1
+J2 15 L
+I 16 J1
+I 17 L
+I 18 G
+L 19 J2
+L 20 I
+L 21 H
+G 22 I
+G 23 H
+G 24 F
+H 25 L
+H 26 G
+H 27 F
+F 28 G
+F 29 H
+F 30 E
+O 31 N
+O 32 E
+O 33 S
+O 34 P
+E 35 F
+E 36 O
+E 37 D
+S 38 O
+S 39 P
+S 40 Q
+P 41 S
+P 42 O
+P 43 D
+P 44 Q
+D 45 E
+D 46 P
+D 47 C
+Q 48 S
+Q 49 P
+Q 50 R
+C 51 D
+C 52 B
+R 53 Q
+R 54 B
+R 55 T
+B 56 C
+B 57 R
+B 58 A
+T 59 R
+A 60 B
+
+
+
 
 
