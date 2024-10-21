@@ -1,9 +1,10 @@
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class DataRecord {
-    private ArrayList<ArrayList<String>> heuristic; // holds the parent nodes and their heuristic values
-    private ArrayList<ArrayList<String>> actual;
+    // Map<Node, hValue>
+    private Map<Integer, Double> parentNodeHeuristicMap; // To store node and its heuristic value
+    private Map<Integer, List<List<Integer>>> connectionsMap;  // To store node connections (parent -> [cost, neighbour])
+
     private int numNodes;
     private int numConnections;
     /**
@@ -11,32 +12,37 @@ public class DataRecord {
      *
      * @param numNodes an int that holds the total number of nodes
      */
-    public DataRecord(String numNodes, String numConnections) {
-        this.numNodes = Integer.parseInt(numNodes);
-        this.numConnections = Integer.parseInt(numConnections);
-        heuristic = new ArrayList<>();
-        actual = new ArrayList<>();
-
-        for (int i = 0; i < this.numNodes; i++) {
-            heuristic.add(new ArrayList<>());
-            actual.add(new ArrayList<>());
-        }
+    public DataRecord(int numNodes, int numConnections) {
+        this.numNodes = numNodes;
+        this.numConnections = numConnections;
+        this.parentNodeHeuristicMap = new HashMap<>();
+        this.connectionsMap = new HashMap<>();
     }
 
-    public void addParentNode(String parentNodeName, String heuristicValue) {
-        heuristic.add(new ArrayList<String>(Arrays.asList(parentNodeName, heuristicValue))); // stores node and value per row
+    public void addParentNode(int parentNodeLabel, double heuristicValue) {
+        this.parentNodeHeuristicMap.put(parentNodeLabel, heuristicValue);
     }
 
-    public void addNeighbours(String currNode, String costOfPath, String neighbourName) {
-        actual.add(new ArrayList<String>(Arrays.asList(currNode, costOfPath, neighbourName))); // stores currNode, costOfPath, node of neighbour name
+    public void addNeighbours(int currNode, int costOfPath, int neighbourName) {
+        // Create a new ArrayList if there is no existing list for currNode
+        this.connectionsMap.putIfAbsent(currNode, new ArrayList<>());
+
+
+        // Create a new list for cost and neighbour
+        List<Integer> neighbourInfo = new ArrayList<>();
+        neighbourInfo.add(costOfPath);
+        neighbourInfo.add(neighbourName);
+
+        // Add the new information to the existing list for currNode
+        this.connectionsMap.get(currNode).add(neighbourInfo);
     }
 
-    public ArrayList<ArrayList<String>> getHeuristic() {
-        return this.heuristic;
+    public Map<Integer, Double> getHeuristic() {
+        return this.parentNodeHeuristicMap;
     }
 
-    public ArrayList<ArrayList<String>> getActual() {
-        return this.actual;
+    public Map<Integer, List<List<Integer>>> getActualCost(){
+        return this.connectionsMap;
     }
 
     public int getNumNodes() {
@@ -47,4 +53,23 @@ public class DataRecord {
         return this.numConnections;
     }
 
+    public void printConnections() {
+        int temp = 0;
+        String[] nodeName = {
+                "A", "B", "C", "D", "E", "F", "G", "H", "I", "J1",
+                "J2", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
+                "T", "U"
+        };
+                                            // ( get.(0), get.(1) )
+        System.out.println("(Current Node) -> [CostPath, Neighbour Node]");
+        for (Map.Entry<Integer, List<List<Integer>>> entry : connectionsMap.entrySet()) {
+            System.out.print("(" + nodeName[entry.getKey()] + " = " + entry.getKey() + ")" + " -> ");
+            for (List<Integer> info : entry.getValue()) {
+                temp = info.get(1);
+                System.out.print("[" + info.get(0) + ", " + nodeName[temp] + "] "); // Corrected access to List elements
+            }
+            System.out.println();
+        }
+    }
 }
+
