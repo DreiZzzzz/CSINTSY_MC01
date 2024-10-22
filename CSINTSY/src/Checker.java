@@ -199,14 +199,18 @@ public class Checker {
             neighbourNode = sc.nextInt();
             System.out.println();
         } while (neighbourNode != mainNode && neighbourNode > 21 && neighbourNode < 0);
+
         costOfPath = recordHolder.getCostPath(mainNode, neighbourNode);
 
         System.out.println("COP FROM " + mainNode + " TO " + neighbourNode + " = " + costOfPath);
     }
 
+    /*
     public boolean getNodeIndex(int nodeKey // arrlist) {
 
     }
+    */
+
 
 
 
