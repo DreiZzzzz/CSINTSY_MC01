@@ -1,5 +1,5 @@
 import java.util.Scanner;
-// last update: oct 22
+// last update: oct 22, added costPath to sample.txt
 
 public class Checker {
     private static DataRecord recordHolder;
@@ -187,6 +187,11 @@ public class Checker {
         int mainNode = -1;
         int neighbourNode = -1;
         int costOfPath = -1;
+        String[] nodeName = {
+                "A", "B", "C", "D", "E", "F", "G", "H", "I", "J1",
+                "J2", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
+                "T", "U"
+        };
 
         do {
             System.out.print("Enter main node: ");
@@ -202,14 +207,18 @@ public class Checker {
 
         costOfPath = recordHolder.getCostPath(mainNode, neighbourNode);
 
+        System.out.println("COP FROM " + nodeName[mainNode] + " TO " +  nodeName[neighbourNode] + " = " + costOfPath);
         System.out.println("COP FROM " + mainNode + " TO " + neighbourNode + " = " + costOfPath);
     }
 
+    //
     /*
-    public boolean getNodeIndex(int nodeKey // arrlist) {
+    public boolean getNodeIndex(int nodeKey) {
 
     }
-    */
+
+     */
+
 
 
 
