@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+// New Main file is Checker.java
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

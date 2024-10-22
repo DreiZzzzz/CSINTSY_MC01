@@ -1,0 +1,8 @@
+<numNodes> <numConnections>
+<node 1> <heuristic value>
+<node 2> <heuristic value>
+<node n> <heuristic value>
+<parentNode> <cost of path> <neighbour node>
+<parentNode> <cost of path> <neighbour node>
+
+

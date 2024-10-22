@@ -1,8 +1,11 @@
 import java.util.*;
-
+// oct 22
 
 public class DataRecord {
+    // <Key = node, value = heuristic value>
     private Map<Integer, Double> parentNodeHeuristicMap; // To store node and its heuristic value
+
+    // <key = node, List()
     private Map<Integer, List<List<Integer>>> connectionsMap;  // To store node connections (parent -> [cost, neighbour])
     private int numNodes;
     private int numConnections;
@@ -83,7 +86,7 @@ public class DataRecord {
                 "T", "U"
         };
                                             // ( get.(0), get.(1) )
-        System.out.println("(Current Node) -> [CostPath, Neighbour Node]");
+        System.out.println("(Main Node) -> [CostPath, Neighbour Node]");
         for (Map.Entry<Integer, List<List<Integer>>> entry : connectionsMap.entrySet()) {
             System.out.print("(" + nodeName[entry.getKey()] + " = " + entry.getKey() + ")" + " -> ");
             for (List<Integer> info : entry.getValue()) {
@@ -117,8 +120,30 @@ public class DataRecord {
         for (Map.Entry<Integer, Double> entry : parentNodeHeuristicMap.entrySet()) {
             Integer key = entry.getKey();
             Double value = entry.getValue();
-            System.out.println("Key: (" + key + " = " + nodeName[key] + "), Value: " + value);
+            System.out.println("Key: (" + key + " = " + nodeName[key] + "), h(n) value: " + value);
         }
     }
+
+    // key is an integer
+    // ex (node A = 0)
+    public double getHVal(int nodeKey) {
+        return parentNodeHeuristicMap.get(nodeKey);
+    } // is the function I made correct?
+
+    /**
+     * @func that returns the cost of path between two neighbouring nodes, otherwise -1
+     */
+    public int getCostPath(int mainNode, int neighbourNode) {
+        // Loop through all the connections of the mainNode
+        List<List<Integer>> connections = connectionsMap.get(mainNode);
+        for (List<Integer> connection : connections) {
+            // Check if the second element (neighbor) matches neighbourNode
+            if (connection.get(1) == neighbourNode) {
+                return connection.get(0); // Return the cost (first element)
+            }
+        }
+        return -1; // If no connection to neighbourNode is found
+    }
+
 }
 
