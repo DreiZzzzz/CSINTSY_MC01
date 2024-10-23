@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Checker {
+public class Main {
     private static DataRecord recordHolder;
     private static Scanner sc = new Scanner(System.in);
     private static FileReader readFile = new FileReader();
