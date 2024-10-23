@@ -2,15 +2,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 // oct 22
 
 public class FileReader {
     private int numNodes, numConnections;
-    private int nodeLabel;
-    private double heuristicValue; // Changed to double to match the input
     private DataRecord recordHolder;
     private int parentNode, costOfPath, neighbourNodeName;
 
@@ -22,14 +17,6 @@ public class FileReader {
 
             // Instantiates recordHolder with the number of nodes and connections
             recordHolder = new DataRecord(numNodes, numConnections);
-
-            // This loop scans for nodes and their heuristic value
-            for (int i = 0; i < numNodes; i++) {
-                nodeLabel = scanner.nextInt(); // stores the name of node
-                heuristicValue = scanner.nextDouble(); // stores the heuristic value (double)
-                // Add the parent node and heuristic (round or cast to int if necessary)
-                recordHolder.addParentNode(nodeLabel, heuristicValue);
-            }
 
             // This loop scans for parent-neighbor connections and their costs
             for (int i = 0; i < numConnections; i++) {

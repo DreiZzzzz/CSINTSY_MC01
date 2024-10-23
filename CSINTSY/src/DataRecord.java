@@ -2,13 +2,11 @@ import java.util.*;
 // oct 22
 
 public class DataRecord {
-    // <Key = node, value = heuristic value>
-    private Map<Integer, Double> parentNodeHeuristicMap; // To store node and its heuristic value
-
     // <key = node, List()
     private Map<Integer, List<List<Integer>>> connectionsMap;  // To store node connections (parent -> [cost, neighbour])
     private int numNodes;
     private int numConnections;
+    private int[] heuristicValues;
     /**
      * The sole constructor of the Graph class
      *
@@ -18,18 +16,9 @@ public class DataRecord {
     public DataRecord(int numNodes, int numConnections) {
         this.numNodes = numNodes;
         this.numConnections = numConnections;
-        this.parentNodeHeuristicMap = new HashMap<>();
         this.connectionsMap = new HashMap<>();
-    }
-
-    /**
-     * Adds a node, and it's corresponding heuristic value in the map.
-     *
-     * @param parentNodeLabel
-     * @param heuristicValue
-     */
-    public void addParentNode(int parentNodeLabel, double heuristicValue) {
-        this.parentNodeHeuristicMap.put(parentNodeLabel, heuristicValue);
+        heuristicValues = new int[numNodes];
+        Arrays.fill(heuristicValues, -1); // Initialize all heuristic values to -1
     }
 
     /**
@@ -51,14 +40,6 @@ public class DataRecord {
 
         // Add the new information to the existing list for currNode
         this.connectionsMap.get(currNode).add(neighbourInfo);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Map<Integer, Double> getHeuristic() {
-        return this.parentNodeHeuristicMap;
     }
 
     /**
@@ -108,29 +89,6 @@ public class DataRecord {
     }
 
     /**
-     *
-     */
-    public void printHeuristicValue() {
-        String[] nodeName = {
-                "A", "B", "C", "D", "E", "F", "G", "H", "I", "J1",
-                "J2", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
-                "T", "U"
-        };
-
-        for (Map.Entry<Integer, Double> entry : parentNodeHeuristicMap.entrySet()) {
-            Integer key = entry.getKey();
-            Double value = entry.getValue();
-            System.out.println("Key: (" + key + " = " + nodeName[key] + "), h(n) value: " + value);
-        }
-    }
-
-    // key is an integer
-    // ex (node A = 0)
-    public double getHVal(int nodeKey) {
-        return parentNodeHeuristicMap.get(nodeKey);
-    } // is the function I made correct?
-
-    /**
      * @func that returns the cost of path between two neighbouring nodes, otherwise -1
      */
     public int getCostPath(int mainNode, int neighbourNode) {
@@ -143,6 +101,41 @@ public class DataRecord {
             }
         }
         return -1; // If no connection to neighbourNode is found
+    }
+
+    public void calculateHeuristic(int endNode) {
+        Queue<Integer> queue = new LinkedList<>();
+        boolean[] visited = new boolean[heuristicValues.length];
+
+        queue.add(endNode);
+        visited[endNode] = true;
+        heuristicValues[endNode] = 0; // Distance to itself is 0
+
+        while (!queue.isEmpty()) {
+            int currentNode = queue.poll();
+            int currentHeuristicValue = heuristicValues[currentNode];
+
+            // Explore neighbors
+            List<List<Integer>> neighbors = connectionsMap.get(currentNode);
+            if (neighbors != null) {
+                for (List<Integer> neighbor : neighbors) {
+                    int neighborNode = neighbor.get(1); // Get the neighbor node
+                    if (!visited[neighborNode]) {
+                        visited[neighborNode] = true;
+                        heuristicValues[neighborNode] = currentHeuristicValue + 1; // Increment the distance
+                        queue.add(neighborNode);
+                    }
+                }
+            }
+        }
+    }
+
+    public int getHeuristicValue (int node) {
+        return heuristicValues[node];
+    }
+
+    public Map<Integer, List<List<Integer>>> getConnectionsMap() {
+        return connectionsMap;
     }
 
 }
