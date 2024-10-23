@@ -2,11 +2,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-// oct 22
-
 public class FileReader {
     private int numNodes, numConnections;
     private int nodeLabel;

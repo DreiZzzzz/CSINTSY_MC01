@@ -1,3 +1,4 @@
+// THIS FILE ONLY CONTAINS THE FORMAT OF THE data.txt
 <numNodes> <numConnections>
 <node 1> <heuristic value>
 <node 2> <heuristic value>

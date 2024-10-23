@@ -1,5 +1,4 @@
 import java.util.Scanner;
-// last update: oct 22, added costPath to sample.txt
 
 public class Checker {
     private static DataRecord recordHolder;
@@ -12,30 +11,49 @@ public class Checker {
         int selectAlgo;
         int startEnd[] = new int[2];
         boolean reLoop = false;
+        String[] nodeName = { "A", "B", "C",
+                              "D", "E", "F",
+                              "G", "H", "I",
+                              "J1", "J2", "K",
+                              "L", "M", "N",
+                              "O", "P", "Q",
+                              "R", "S", "T",
+                              "U"};
+        String[] fullName= { "University Mall", "McDonald's", "Perico's", // A-C
+                             "Bloemen Hall", "W.H Taft Residence", "EGI TAFT", // D-F
+                             "Castro Street", "Agno Food Court", "One Archers'", // G-I
+                             "Andrew's La Casita", "Enrique's La Casita", "Green Mall", //J1-K
+                             "Green Court", "Sherwood", "Jollibee", //L-N
+                             "Dagonoy St.", "Burgundy", "Estrada St.", // O-Q
+                             "D' Student's Place", "Leon Guinto St.", "P.Ocampo St.", // R-T
+                             "Fidel A. Reyes St."}; // U
 
+        printAst();
         // Loops until the user enters an existing and valid file name.
         do {
             System.out.print("Enter filename: ");
-            fileName = sc.nextLine();  // Use user input instead of hardcoded "sample.txt"
-
+            fileName = sc.nextLine();
             System.out.println(); // prints a newline
 
-            // Try reading the file, handle potential exceptions
             recordHolder = readFile.fileReader(fileName);
             if (recordHolder == null) {
                 System.out.println("Error reading file. Please try again.");
+                printAst();
             }
         } while(recordHolder == null);  // re-loop until the file is read correctly
 
-       // System.out.println("Neighbours of B: " + recordHolder.getActualCost().get(16).size()); // 4
+       // System.out.println("Neighbours of B: " + recordHolder.getActualCost().get(16).size()); // 4 (remove mamaya)
         do {
             userChoice = getUserChoice();
             switch (userChoice) {
-                case 1: recordHolder.printHeuristicValue();
+                case 1: printAst();
+                    recordHolder.printHeuristicValue(nodeName);
                     break;
-                case 2: recordHolder.printConnections();
+                case 2: printAst();
+                    recordHolder.printConnections(nodeName);
                     break;
-                case 3: displayNodes();
+                case 3: printAst();
+                    displayNodes(nodeName, fullName);
                     startEnd = getEndStart();
 
                     // REMOVE ME LATER^ FOR CHECKING ONLY
@@ -45,32 +63,28 @@ public class Checker {
 
                     selectAlgo = userAlgoChoice();
                     switch (selectAlgo) {
-                        case 1:
+                        case 1: AStarSearchAlgo(startEnd[0], startEnd[1], nodeName, fullName);
                             break;
-                        case 2:
+                        case 2: // implement UCS
                             break;
                     }
-
                     break;
-                case 4: getMainNeighbourCost();
-                case 5: System.out.println("!! PROGRAM EXIT SUCCESSFUL !!");
+                case 4: printAst();
+                    System.out.println("!! PROGRAM EXIT SUCCESSFUL !!");
                     break;
             }
-
-
-        } while (userChoice != 5);
+        } while (userChoice != 4);
     }
 
-    // add do-while checker
     public static int getUserChoice() {
         int userChoice = 0;
 
+        printAst();
         System.out.println("!! USER OPTIONS !!");
         System.out.println("(1) VIEW NODES AND HEURISTIC VALUE");
         System.out.println("(2) VIEW CONNECTIONS AND COST OF PATH OF ALL NODES");
         System.out.println("(3) TEST ALGORITHM (UCS/A*)");
-        System.out.println("(4) VIEW COST OF PATH BETWEEN 2 NODES");
-        System.out.println("(5) EXIT PROGRAM");
+        System.out.println("(4) EXIT PROGRAM\n");
 
         do {
             System.out.print("Enter choice [1-4]: ");
@@ -81,14 +95,14 @@ public class Checker {
         return userChoice;
     }
 
-        // add do while classes
     public static int userAlgoChoice() {
         int userAlgoChoice = 0;
 
+        printAst();
         System.out.println("!! ALGORITHM OPTIONS !!");
         System.out.println("(1) A* SEARCH ALGORITHM");
         System.out.println("(2) UCS SEARCH ALGORITHM");
-        System.out.println("(3) BACK TO MAIN MENU");
+        System.out.println("(3) BACK TO MAIN MENU\n");
 
         do {
             System.out.print("Enter choice (int): ");
@@ -99,47 +113,16 @@ public class Checker {
         return userAlgoChoice;
     }
 
-    public static void displayNodes() {
-        int ctr = 0;
-
-        String[] nodeName = { "A", "B", "C",
-                              "D", "E", "F",
-                              "G", "H", "I",
-                              "J1", "J2", "K",
-                              "L", "M", "N",
-                              "O", "P", "Q",
-                              "R", "S", "T",
-                              "U"};
-        String[] fullName= { "University Mall", "McDonald's", "Perico's", // A-C
-                     "Bloemen Hall", "W.H Taft Residence", "EGI TAFT", // D-F
-                     "Castro Street", "Agno Food Court", "One Archers'", // G-I
-                     "Andrew's La Casita", "Enrique's La Casita", "Green Mall", //J1-K
-                     "Green Court", "Sherwood", "Jollibee", //L-N
-                     "Dagonoy St.", "Burgundy", "Estrada St.", // O-Q
-                     "D' Student's Place", "Leon Guinto St.", "P.Ocampo St.", // R-T
-                     "Fidel A. Reyes St."}; // U
-
+    //
+    public static void displayNodes(String[] nodeName, String[] fullName) {
         System.out.println("!! DLSU FOOD NODES !!");
         for (int i = 0; i < nodeName.length; i++) {
-            System.out.print(fullName[i] + "(" + nodeName[i] + " = " + i + ")" + "\t\t");
-            ++ctr;
-
-            if (ctr == 4) {
-                ctr = 0;
-                System.out.println(); //newline
-            }
+            System.out.println(fullName[i] + "(" + nodeName[i] + " = " + i + ")");
         }
-        System.out.println(); // newline
         System.out.println(); // newline
     }
 
-    // ask for the algo
-
-    /**
-     *
-     * @param
-     * @return
-     */
+    // function that gets the start and nodes from the user input
     public static int[] getEndStart() {
         int[] startEnd  = new int[2];
         boolean isValid = false;
@@ -170,59 +153,20 @@ public class Checker {
         return startEnd;
     }
 
-    // IMPLEMENT FIRST
-    // A* search => continue with the lowest path
-    // COP + heuristic of current node
-    public static void AStarSearchAlgo(int startNode, int endNode) {
-        // recordHolder.ge
+    // FURTHER CHECK IF RESULTS ARE RIGTH
+    public static void AStarSearchAlgo(int startNode, int endNode, String[] nodeName, String[] fullName) {
+        AStarSearchAlgorithm aStar = new AStarSearchAlgorithm(recordHolder, startNode, endNode, nodeName, fullName);
+        aStar.performAlgo();
     }
 
     // IMPLEMENT FIRST
     public static void UCSearchAlgo(int startNode, int endNode) {
-
+        /*code here */
+        // uniformCS.performAlgo();
     }
 
-    public static void getMainNeighbourCost() {
-        // REMOVE ME AFTER TESTING
-        int mainNode = -1;
-        int neighbourNode = -1;
-        int costOfPath = -1;
-        String[] nodeName = {
-                "A", "B", "C", "D", "E", "F", "G", "H", "I", "J1",
-                "J2", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
-                "T", "U"
-        };
-
-        do {
-            System.out.print("Enter main node: ");
-            mainNode = sc.nextInt();
-            System.out.println();
-        } while (mainNode > 21 && mainNode < 0);
-
-        do {
-            System.out.print("Enter neighbour node: ");
-            neighbourNode = sc.nextInt();
-            System.out.println();
-        } while (neighbourNode != mainNode && neighbourNode > 21 && neighbourNode < 0);
-
-        costOfPath = recordHolder.getCostPath(mainNode, neighbourNode);
-
-        System.out.println("COP FROM " + nodeName[mainNode] + " TO " +  nodeName[neighbourNode] + " = " + costOfPath);
-        System.out.println("COP FROM " + mainNode + " TO " + neighbourNode + " = " + costOfPath);
+    public static void printAst() {
+        System.out.println("**************************************************************************************************************************************************************************************************");
     }
-
-    //
-    /*
-    public boolean getNodeIndex(int nodeKey) {
-
-    }
-
-     */
-
-
-
-
-
-
 }
 
