@@ -65,7 +65,7 @@ public class Main {
                     switch (selectAlgo) {
                         case 1: AStarSearchAlgo(startEnd[0], startEnd[1], nodeName, fullName);
                             break;
-                        case 2: // implement UCS
+                        case 2: UCSearchAlgo(startEnd[0], startEnd[1], nodeName, fullName);
                             break;
                     }
                     break;
@@ -159,10 +159,10 @@ public class Main {
         aStar.performAlgo();
     }
 
-    // IMPLEMENT FIRST
-    public static void UCSearchAlgo(int startNode, int endNode) {
-        /*code here */
-        // uniformCS.performAlgo();
+    // FURTHER CHECK IF RESULTS ARE RIGHT
+    public static void UCSearchAlgo(int startNode, int endNode, String[] nodeName, String[] fullName) {
+        UniformCostSearchAlgorithm ucs = new UniformCostSearchAlgorithm(recordHolder, startNode, endNode, nodeName, fullName);
+        ucs.performAlgo();
     }
 
     public static void printAst() {

@@ -1,14 +1,12 @@
 import java.util.*;
 
-public class AStarSearchAlgorithm {
+public class UniformCostSearchAlgorithm {
     private int goal, start;
-    private Map<Integer, Double> parentNodeHeuristicMap;
     private Map<Integer, List<List<Integer>>> connectionsMap;
     private String[] nodeName;
     private String[] fullName;
 
-    public AStarSearchAlgorithm(DataRecord recordHolder, int startNode, int endNode, String[] nodeName, String[] fullName) {
-        this.parentNodeHeuristicMap = recordHolder.getHeuristic();
+    public UniformCostSearchAlgorithm(DataRecord recordHolder, int startNode, int endNode, String[] nodeName, String[] fullName) {
         this.connectionsMap = recordHolder.getActualCost();
         this.start = startNode;
         this.goal = endNode;
@@ -17,17 +15,17 @@ public class AStarSearchAlgorithm {
     }
 
     public void performAlgo() { // change return type from List<Integer> to void
-        PriorityQueue<Nodes> openSet = new PriorityQueue<>(Comparator.comparingDouble(n -> n.f)); // Priority queue to store nodes with their f(n) values
+        PriorityQueue<Nodes> openSet = new PriorityQueue<>(Comparator.comparingDouble(n -> n.g)); // Priority queue prioritizing nodes by cost g(n)
         Map<Integer, Double> gScore = new HashMap<>(); // Map to store the cost of the best path to each node
         Set<Integer> closedSet = new HashSet<>();   // Set to keep track of visited nodes
         Map<Integer, Integer> cameFrom = new HashMap<>(); // Map to store the optimal path
 
         // Initialize
         gScore.put(start, 0.0);
-        openSet.add(new Nodes(start, 0.0, parentNodeHeuristicMap.get(start)));
+        openSet.add(new Nodes(start, 0.0));
 
         printAst();
-        System.out.println("Starting A* algorithm traversal:");
+        System.out.println("Starting Uniform Cost Search algorithm traversal:");
         while (!openSet.isEmpty()) {
             Nodes current = openSet.poll();
             System.out.println("Exploring node: (" + nodeName[current.id] + " == " + current.id + ") " + fullName[current.id]);  // Print the node currently being explored
@@ -65,11 +63,10 @@ public class AStarSearchAlgorithm {
                 if (tentativeGScore < gScore.getOrDefault(neighbor, Double.MAX_VALUE)) {
                     cameFrom.put(neighbor, current.id);   // Update the best path to neighbor
                     gScore.put(neighbor, tentativeGScore);
-                    double fScore = tentativeGScore + parentNodeHeuristicMap.getOrDefault(neighbor, Double.MAX_VALUE);
-                    openSet.add(new Nodes(neighbor, tentativeGScore, fScore));
+                    openSet.add(new Nodes(neighbor, tentativeGScore));
 
                     // Print neighbor => for checking only remove / EDIT ME LATER
-                    System.out.println("  Unvisited Neighbour: (" + nodeName[neighbor] + " == " + fullName[neighbor] + " == " + neighbor + ")" + ", fScore: " + fScore);
+                    System.out.println("  Unvisited Neighbour: (" + nodeName[neighbor] + " == " + fullName[neighbor] + " == " + neighbor + ")" + ", gScore: " + tentativeGScore);
                     System.out.println(); // newline
                 }
             }

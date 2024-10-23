@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class FileReader {
     private int numNodes, numConnections;
     private int nodeLabel;
-    private double heuristicValue; // Changed to double to match the input
+    private double heuristicValue;
     private DataRecord recordHolder;
     private int parentNode, costOfPath, neighbourNodeName;
 
