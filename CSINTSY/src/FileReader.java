@@ -15,15 +15,13 @@ public class FileReader {
             numNodes = scanner.nextInt(); // stores the number of nodes
             numConnections = scanner.nextInt(); // stores the overall number of connections
 
-            // Instantiates recordHolder with the number of nodes and connections
-            recordHolder = new DataRecord(numNodes, numConnections);
+            recordHolder = new DataRecord(numNodes, numConnections); // Instantiates recordHolder with the number of nodes and connections
 
             // This loop scans for nodes and their heuristic value
             for (int i = 0; i < numNodes; i++) {
                 nodeLabel = scanner.nextInt(); // stores the name of node
                 heuristicValue = scanner.nextDouble(); // stores the heuristic value (double)
-                // Add the parent node and heuristic (round or cast to int if necessary)
-                recordHolder.addParentNode(nodeLabel, heuristicValue);
+                recordHolder.addParentNode(nodeLabel, heuristicValue);   // Add the parent node and heuristic (round or cast to int if necessary)
             }
 
             // This loop scans for parent-neighbor connections and their costs
@@ -31,8 +29,7 @@ public class FileReader {
                 parentNode = scanner.nextInt(); // stores the name of the parent node
                 costOfPath = scanner.nextInt(); // stores the cost of the path
                 neighbourNodeName = scanner.nextInt(); // stores the neighbor node name
-                // Add the connection to the DataRecord
-                recordHolder.addNeighbours(parentNode, costOfPath, neighbourNodeName);
+                recordHolder.addNeighbours(parentNode, costOfPath, neighbourNodeName);   // Add the connection to the DataRecord
             }
 
             scanner.close();
@@ -40,8 +37,7 @@ public class FileReader {
             System.out.println("\nFILE DOES NOT EXIST: " + fileName + "\n");
             return null;
         } catch (Exception e) {
-            // Handle other potential exceptions like NoSuchElementException, etc.
-            System.out.println("Error while reading the file. Please check the file format.");
+            System.out.println("Error while reading the file. Please check the file format."); // Handle other potential exceptions like NoSuchElementException, etc.
             return null;
         }
 

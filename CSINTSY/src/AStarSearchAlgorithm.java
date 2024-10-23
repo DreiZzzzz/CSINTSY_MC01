@@ -17,14 +17,10 @@ public class AStarSearchAlgorithm {
     }
 
     public void performAlgo() { // change return type from List<Integer> to void
-        // Priority queue to store nodes with their f(n) values
-        PriorityQueue<Node> openSet = new PriorityQueue<>(Comparator.comparingDouble(n -> n.f));
-        // Map to store the cost of the best path to each node
-        Map<Integer, Double> gScore = new HashMap<>();
-        // Set to keep track of visited nodes
-        Set<Integer> closedSet = new HashSet<>();
-        // Map to store the optimal path
-        Map<Integer, Integer> cameFrom = new HashMap<>();
+        PriorityQueue<Node> openSet = new PriorityQueue<>(Comparator.comparingDouble(n -> n.f)); // Priority queue to store nodes with their f(n) values
+        Map<Integer, Double> gScore = new HashMap<>(); // Map to store the cost of the best path to each node
+        Set<Integer> closedSet = new HashSet<>();   // Set to keep track of visited nodes
+        Map<Integer, Integer> cameFrom = new HashMap<>(); // Map to store the optimal path
 
         // Initialize
         gScore.put(start, 0.0);
@@ -53,7 +49,7 @@ public class AStarSearchAlgorithm {
                     System.out.print(" => ");
                 }
                 System.out.println(); // newline
-                break; // to prevent unnecesary copmputations
+                break; // to prevent unnecessary computations
             }
             closedSet.add(current.id);
 
@@ -67,8 +63,7 @@ public class AStarSearchAlgorithm {
                 double tentativeGScore = gScore.getOrDefault(current.id, Double.MAX_VALUE) + cost;
 
                 if (tentativeGScore < gScore.getOrDefault(neighbor, Double.MAX_VALUE)) {
-                    // Update the best path to neighbor
-                    cameFrom.put(neighbor, current.id);
+                    cameFrom.put(neighbor, current.id);   // Update the best path to neighbor
                     gScore.put(neighbor, tentativeGScore);
                     double fScore = tentativeGScore + parentNodeHeuristicMap.getOrDefault(neighbor, Double.MAX_VALUE);
                     openSet.add(new Node(neighbor, tentativeGScore, fScore));

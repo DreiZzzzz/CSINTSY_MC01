@@ -153,7 +153,7 @@ public class Checker {
         return startEnd;
     }
 
-    // FURTHER CHECK IF RESULTS ARE RIGTH
+    // FURTHER CHECK IF RESULTS ARE RIGHT
     public static void AStarSearchAlgo(int startNode, int endNode, String[] nodeName, String[] fullName) {
         AStarSearchAlgorithm aStar = new AStarSearchAlgorithm(recordHolder, startNode, endNode, nodeName, fullName);
         aStar.performAlgo();
