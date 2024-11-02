@@ -45,11 +45,10 @@ public class Main {
         printAst();
         do {
             displayNodes(nodeName, fullName);
-            System.out.println("NOTE: Enter valid values for start and end nodes.\nOtherwise, enter -1 for end node value to quit. \n");
+            System.out.println("NOTE: Enter valid values for start and end nodes.\n" +
+                               "Otherwise, enter -1 for end node value to quit. \n");
 
             startEnd = getEndStart();
-
-            // function call for heuristic
 
             if (startEnd[1] == -1) {
                 break; // exit loop and will not execute the remaining codes below
@@ -73,10 +72,10 @@ public class Main {
 
                             switch (selectedAlgo) {
                                 case 1:
-                                    AStarSearchAlgo(startEnd[0], startEnd[1], nodeName, fullName);
+                                    performASTAR(startEnd[0], startEnd[1], nodeName, fullName);
                                     break;
                                 case 2:
-                                    UCSearchAlgo(startEnd[0], startEnd[1], nodeName, fullName);
+                                    performUCS(startEnd[0], startEnd[1], nodeName, fullName);
                                     break;
                             }
                         } while (selectedAlgo != 3);
@@ -142,12 +141,12 @@ public class Main {
         return startEnd;
     }
 
-    public static void AStarSearchAlgo(int startNode, int endNode, String[] nodeName, String[] fullName) {
+    public static void performASTAR(int startNode, int endNode, String[] nodeName, String[] fullName) {
         AStarSearchAlgorithm aStar = new AStarSearchAlgorithm(recordHolder, startNode, endNode, nodeName, fullName);
         aStar.performAlgo();
     }
 
-    public static void UCSearchAlgo(int startNode, int endNode, String[] nodeName, String[] fullName) {
+    public static void performUCS(int startNode, int endNode, String[] nodeName, String[] fullName) {
         UniformCostSearchAlgorithm ucs = new UniformCostSearchAlgorithm(recordHolder, startNode, endNode, nodeName, fullName);
         ucs.performAlgo();
     }
@@ -178,7 +177,9 @@ public class Main {
     }
 
     public static void printAst() {
-        System.out.println("**************************************************************************************************************************************************************************************************");
+        System.out.println("*************************************************************" +
+                "**************************************************************************" +
+                "***********************************************************");
     }
 }
 
