@@ -5,12 +5,14 @@ public class DataRecord {
     private Map<Integer, List<List<Integer>>> connectionsMap;  // To store node connections (parent -> [cost, neighbour])
     private int numNodes;
     private int numConnections;
+    private int[] heuristicValues; //
 
     public DataRecord(int numNodes, int numConnections) {
         this.numNodes = numNodes;
         this.numConnections = numConnections;
         this.parentNodeHeuristicMap = new HashMap<>();
         this.connectionsMap = new HashMap<>();
+        this.heuristicValues = new int[numNodes]; //
     }
 
     // Adds a node, and it's corresponding heuristic value using maps.
@@ -63,5 +65,37 @@ public class DataRecord {
         }
         System.out.println();
     }
+
+    public void calculateHeuristic(int endNode) {
+        Queue<Integer> queue = new LinkedList<>();
+        boolean[] visited = new boolean[heuristicValues.length];
+
+        queue.add(endNode);
+        visited[endNode] = true;
+        heuristicValues[endNode] = 0; // Distance to itself is 0
+
+        while (!queue.isEmpty()) {
+            int currentNode = queue.poll();
+            int currentHeuristicValue = heuristicValues[currentNode];
+
+            // Explore neighbors
+            List<List<Integer>> neighbors = connectionsMap.get(currentNode);
+            if (neighbors != null) {
+                for (List<Integer> neighbor : neighbors) {
+                    int neighborNode = neighbor.get(1); // Get the neighbor node
+                    if (!visited[neighborNode]) {
+                        visited[neighborNode] = true;
+                        heuristicValues[neighborNode] = currentHeuristicValue + 1; // Increment the distance
+                        queue.add(neighborNode);
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < numNodes; i++) {
+            this.parentNodeHeuristicMap.put(i, (double) heuristicValues[i]);
+        }
+    }
+
 }
 

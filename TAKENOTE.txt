@@ -1,8 +1,10 @@
+// use finaldata.txt
+
 // THIS FILE ONLY CONTAINS THE FORMAT OF THE data.txt
 <numNodes> <numConnections>
-<node 1> <heuristic value>
-<node 2> <heuristic value>
-<node n> <heuristic value>
+<node 1> <heuristic value = 0 (to be computed after start and end goal was given)>
+<node 2> <heuristic value = 0 (to be computed after start and end goal was given)>
+<node n> <heuristic value = 0 (to be computed after start and end goal was given)>
 <parentNode> <cost of path> <neighbour node>
 <parentNode> <cost of path> <neighbour node>
 
