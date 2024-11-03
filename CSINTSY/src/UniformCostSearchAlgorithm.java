@@ -14,7 +14,7 @@ public class UniformCostSearchAlgorithm {
         this.fullName = fullName;
     }
 
-    public void performAlgo() { // change return type from List<Integer> to void
+    public void performAlgo() {
         PriorityQueue<Nodes> openSet = new PriorityQueue<>(Comparator.comparingDouble(n -> n.g)); // Priority queue prioritizing nodes by cost g(n)
         Map<Integer, Double> gScore = new HashMap<>(); // Map to store the cost of the best path to each node
         Set<Integer> closedSet = new HashSet<>();   // Set to keep track of visited nodes

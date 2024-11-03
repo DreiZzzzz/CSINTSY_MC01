@@ -16,7 +16,7 @@ public class AStarSearchAlgorithm {
         this.fullName = fullName;
     }
 
-    public void performAlgo() { // change return type from List<Integer> to void
+    public void performAlgo() {
         PriorityQueue<Nodes> openSet = new PriorityQueue<>(Comparator.comparingDouble(n -> n.f)); // Priority queue to store nodes with their f(n) values
         Map<Integer, Double> gScore = new HashMap<>(); // Map to store the cost of the best path to each node
         Set<Integer> closedSet = new HashSet<>();   // Set to keep track of visited nodes

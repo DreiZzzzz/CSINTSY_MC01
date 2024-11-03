@@ -1,5 +1,3 @@
-// last edit: Nov 2, 2024 @ 11:20 p.m
-
 import java.util.Scanner;
 
 public class Main {
@@ -31,7 +29,7 @@ public class Main {
 
         // Loops until the user enters an existing and valid file name.
         do {
-            System.out.print("Enter filename: ");
+            System.out.print("Enter filename: "); // use finaldata.txt as data
             fileName = sc.nextLine();
             System.out.println(); // prints a newline
 

@@ -1,4 +1,3 @@
-// Node class to store node information
 public class Nodes {
     public int id;
     public double g; // Actual cost

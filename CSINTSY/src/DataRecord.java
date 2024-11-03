@@ -44,12 +44,12 @@ public class DataRecord {
 
     public void printConnections(String[] nodeName) {
         int temp = 0;
-        System.out.println("(Main Node) -> [CostPath, Neighbour Node]"); // ( get.(0), get.(1) )
+        System.out.println("(Main Node) -> [CostPath, Neighbour Node]");
         for (Map.Entry<Integer, List<List<Integer>>> entry : connectionsMap.entrySet()) {
             System.out.print("(" + nodeName[entry.getKey()] + " = " + entry.getKey() + ")" + " -> ");
             for (List<Integer> info : entry.getValue()) {
                 temp = info.get(1);
-                System.out.print("[" + info.get(0) + ", " + nodeName[temp] + "] "); // Corrected access to List elements
+                System.out.print("[" + info.get(0) + ", " + nodeName[temp] + "] ");
             }
             System.out.println(); // newline
         }
