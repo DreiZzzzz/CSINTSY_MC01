@@ -1,3 +1,7 @@
+// move finaldata.txt outside (along with csintsy_mc01 and _macosx) if there is an issue
+// Reading the file
+
+
 // THIS FILE ONLY CONTAINS THE FORMAT OF THE data.txt
 <number of nodes> <total number of connections>
 <node 1> <heuristic value = 0 (to be computed after start and end goal was given)>
